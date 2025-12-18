@@ -1,0 +1,13 @@
+#Dependencies
+eysh_backend/node_modules/
+eysh_frontend/node_modules/
+
+#build outputs
+.env
+eysh_frontend/dist/
+eysh_backend/build/
+
+
+#build outputs
+client/dist/
+server/build/

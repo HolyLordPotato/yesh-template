@@ -1,11 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
+import axios from '../utils/axios';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../contexts/AuthContext';
 
 function Subjects() {
   const [subjects, setSubjects] = useState([]);
+  const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!user) {
+      navigate('/login');
+      return;
+    }
     const fetchSubjects = async () => {
       try {
         const res = await axios.get('/exam/subjects');
@@ -15,11 +22,15 @@ function Subjects() {
       }
     };
     fetchSubjects();
-  }, []);
+  }, [user, navigate]);
+
+  if (!user) return null;
 
   return (
     <div className="subjects">
       <h2>Subjects</h2>
+      <p>Welcome, {user.email}</p>
+      <button onClick={logout}>Logout</button>
       <ul>
         {subjects.map(subject => (
           <li key={subject.id}>
@@ -29,7 +40,7 @@ function Subjects() {
       </ul>
       <Link to="/scores">View Scores</Link>
       <Link to="/payment">Purchase Access</Link>
-      <Link to="/admin">Admin Panel</Link>
+      {user.is_admin && <Link to="/admin">Admin Panel</Link>}
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../utils/axios';
 import QRCode from 'qrcode.react';
 
 function Payment() {
@@ -38,7 +38,7 @@ function Payment() {
           </li>
         ))}
       </ul>
-      {qrCode && <QRCode value={qrCode} />}
+      {qrCode && <QRCode value={qrCode} size={500} />}
     </div>
   );
 }

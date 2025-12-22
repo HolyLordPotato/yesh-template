@@ -2,13 +2,25 @@
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
-  phone_number VARCHAR(20) UNIQUE NOT NULL,
-  is_admin BOOLEAN DEFAULT FALSE
+  phone_number VARCHAR(20) UNIQUE,
+  email VARCHAR(100) UNIQUE,
+  password_hash VARCHAR(255),
+  is_admin BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE otps (
+  id SERIAL PRIMARY KEY,
+  email VARCHAR(100) NOT NULL,
+  otp VARCHAR(6) NOT NULL,
+  expires_at TIMESTAMP NOT NULL,
+  used BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE subjects (
   id SERIAL PRIMARY KEY,
-  name VARCHAR(100) NOT NULL
+  name VARCHAR(100) NOT NULL,
+  duration INT DEFAULT 3600 -- duration in seconds
 );
 
 CREATE TABLE questions (
